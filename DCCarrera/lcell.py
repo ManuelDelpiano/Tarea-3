@@ -29,12 +29,18 @@ class LCell:
         current_pose = self.p
 
         for old_pose, new_pose, endx, endy, cost, new_move in self.map.neighbors:
-            '''
-            COMPLETAR
             
-            No es necesario que le pongas un nombre de acción distinta a cada movimiento.
-            Por lo que puedes dejar la acción como un string "move"
-            '''
+            newx, newy = self.x+dx, self.y+dy
+            if self.map.inside(newx, newy) and self.map.line_of_sight(self.x, self.y, newx, newy):
+                
+                # Revisar si el camino tiene algún costo extra o algún acelerador
+                sand = self.map.sand
+                ice = self.map.ice
+                if sand[newx][newy]:
+                    cost += self.sandCost
+                elif ice[newx][newy]:
+                    cost += self.iceCost
+                succ.append((Cell(newx, newy, self.map), a, cost))
         return succ
 
     def is_goal(self):

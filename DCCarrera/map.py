@@ -99,14 +99,25 @@ class Map:
             self.costs     = [1]*4
             self.actions   = actions4
         elif n == 8:
-            '''
-            COMPLETAR
-            '''
+            self.neighbors = [(1, 0), (-1, 0), (0, 1), (0, -1),  (1, -1), (-1, -1), (1, 1), (-1, 1)] 
+            self.costs = [1]*4 + [math.sqrt(2)]*4
+            self.actions = actions4 + actions8
+
 
         elif n == "primitiveStraight":
-            '''
-            COMPLETAR
-            '''
+            cost = 1
+            initialPose = np.array([0, 1], dtype = int)
+            rotations = [(2/4)*np.pi,(4/4)*np.pi,(6/4)*np.pi,(8/4)*np.pi]
+            
+            numberOldPose = 0
+            relativePosition = np.array([[0, 1]])
+            initialMove = np.array([0, 1], dtype = int)
+            
+            for k in range(len(rotations)):
+                neighbor = self.generate_primitive_neighbor(initialPose,
+                                                            numberOldPose, initialMove, relativePosition, rotations, k, cost)
+                self.neighbors.append(neighbor)
+                self.costs.append(cost)
 
         elif n == "primitiveRightAngle":
             cost = 2.5*math.pi + self.epsilon
@@ -135,10 +146,20 @@ class Map:
                 self.costs.append(cost)
 
         elif n == "primitiveDiagonal":
-            '''
-            COMPLETAR
-            '''
-
+            cost = math.sqrt(2)
+            initialPose = np.array([1, 1], dtype = int)
+            rotations = [(2/4)*np.pi,(4/4)*np.pi,(6/4)*np.pi,(8/4)*np.pi]
+            
+            numberOldPose = 0
+            relativePosition = np.array([[1, 1]])
+            initialMove = np.array([1, 1], dtype = int)
+            
+            for k in range(len(rotations)):
+                neighbor = self.generate_primitive_neighbor(initialPose,
+                                                            numberOldPose, initialMove, relativePosition, rotations, k, cost)
+                self.neighbors.append(neighbor)
+                self.costs.append(cost)
+            
 
         elif n == "primitiveDiagonalAngle":
             # Movimientos curvos 45 grados en sentido antihorario
@@ -194,22 +215,20 @@ class Map:
         return not self.map[x][y]
 
     def manhattan(x1, y1, x2, y2):
-        '''
-        COMPLETAR
-        '''
-        return 
+        
+        return abs(x2 - x1) + abs(y2 - y1)
 
     def euclidian(x1, y1, x2, y2):
-        '''
-        COMPLETAR
-        '''
-        return 
+
+        return math.sqrt((x2 - x1)**2 + (y2 - y1)**2) 
 
     def octile(x1, y1, x2, y2):
-        '''
-        COMPLETAR
-        '''
-        return 
+
+        dx = abs(x2 - x1)
+        dy = abs(y2 - y1)
+    
+        return min(dx, dy) * math.sqrt(2) + (max(dx, dy) - min(dx, dy))
+
 
     def line_of_sight(self, x0, y0, x1, y1):  # retorna verdadero si las celdas entre (x0, y0) y (x1,y1) están libres
         dx = abs(x1-x0)                       # basado en el algoritmo de la línea de Bresenham

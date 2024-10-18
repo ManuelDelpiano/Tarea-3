@@ -27,7 +27,7 @@ if __name__ == '__main__':
     BLUE = (0, 0, 128)  
 
     ## Tiempo de transiciones, si no quieres ver las transiciones, igualalo a 0.0
-    sleep_time = 1.0
+    sleep_time = 0
 
     ## True si se quiere ver la animación
     ANIMACION = False
@@ -45,14 +45,14 @@ if __name__ == '__main__':
     DEPTH_J2 = 1 # PROFUNDIDAD JUGADOR 2
 
     ## True si se quiere implementar la Poda Alpha-Beta
-    ALPHABETA = False # PODA ALPHA-BETA
+    ALPHABETA = True # PODA ALPHA-BETA
 
     ## PARAMETROS JUGADORES
     ## "MINIMAX" , "HUMANO" , "RANDOM"
     ## JUGADOR_ID = Player(TIPO JUGADOR, COLOR, ID, DEPTH, función de evaluación)
     ## NO MODIFICAR: ID
     ## MODIFICAR: TIPO JUGADOR, DEPTH, función de evaluación
-    JUGADOR_1 = Player("HUMANO", RED, 0, DEPTH_J1, eval_func=score_circle_amount)
+    JUGADOR_1 = Player("MINIMAX", RED, 0, DEPTH_J1, eval_func=score_circle_amount)
     JUGADOR_2 = Player("MINIMAX", GREEN, 1, DEPTH_J2, eval_func=score_circle_amount)
     JUGADORES = [JUGADOR_1, JUGADOR_2]
 

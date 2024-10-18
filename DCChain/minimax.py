@@ -20,7 +20,10 @@ def minimax(circles, JUGADORES, JUGADOR_FIJO , id, table_size,depth, max_player,
             if alphabeta:
               ## MODIFICAR
               # IMPLEMENTAR ALPHA BETA PRUNING
-              continue
+                alpha = max(alpha, maxEval)  # Actualiza el valor de alpha
+                if beta <= alpha:
+                    break 
+        
 
         return maxEval, best_move
     else:
@@ -38,6 +41,8 @@ def minimax(circles, JUGADORES, JUGADOR_FIJO , id, table_size,depth, max_player,
             if alphabeta:
               ## MODIFICAR
               # IMPLEMENTAR ALPHA BETA PRUNING
-              continue
+                beta = min(beta, minEval)
+                if beta <= alpha:
+                    break
         
         return minEval, best_move

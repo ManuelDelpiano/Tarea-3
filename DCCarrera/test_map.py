@@ -20,14 +20,14 @@ def euclidian_heuristic(c):
 
 ############### Variables configurables ###########################
 epsilon = 2                             # Variable epsilon de actividad 6 (2 es el valor estándar).
-m = Map(epsilon, 'Maps/starcraftObstacles.map')
-connectivity = "primitiveSimpleRight"   # Las conectividades son int(4), int(8), "primitiveSimpleRight", "primitiveSimpleDiagonal", "primitiveFull"
-primitivasActivated = True              # Estas usando alguna primitiva? Debe ser True en "primitiveSimpleRight", "primitiveSimpleDiagonal", "primitiveFull"
+m = Map(epsilon, "C:/Users/manue/OneDrive/Escritorio/IA/Tarea-3/DCCarrera/Maps/starcraft.map")
+connectivity = 4   # Las conectividades son int(4), int(8), "primitiveSimpleRight", "primitiveSimpleDiagonal", "primitiveFull"
+primitivasActivated = False              # Estas usando alguna primitiva? Debe ser True en "primitiveSimpleRight", "primitiveSimpleDiagonal", "primitiveFull"
 m.set_connectivity(connectivity)  
 heuristic = euclidian_heuristic         # Cambia la heurística a utilizar
-weight = 1                              # peso que usamos en la heuristica de A*
+weight = 2                        # peso que usamos en la heuristica de A*
 visualize = True                        # mostrar o no la solución?
-num_probs = 1                           # numero de problemas que se ejecutan
+num_probs = 10                # numero de problemas que se ejecutan
 algorithm = "EarlyAstar"                # "Astar" o "EarlyAstar"
 random.seed(0)
 
@@ -82,13 +82,13 @@ for prob in range(0, num_probs):
         gen = set()
         for c in s.generated:
             gen.add((int(c.x), int(c.y)))
-        m.draw_solution(path, gen, primitives= primitivasActivated)
+        #m.draw_solution(path, gen, primitives= primitivasActivated)
     else:
         path = [(int(c.x), int(c.y)) for c in result.trace()]
         gen = set()
         for c in s.generated:
             gen.add((int(c.x), int(c.y)))
-        m.draw_solution(path, gen, primitives= primitivasActivated)
+        #m.draw_solution(path, gen, primitives= primitivasActivated)
 
     if result:
         # Guardar en JSON
